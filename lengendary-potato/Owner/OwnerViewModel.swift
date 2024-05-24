@@ -19,16 +19,18 @@ class OwnerViewModel: ObservableObject {
     
     private var db = Firestore.firestore()
     
-    func getOwner() async {
+    func getOwner() async -> Bool {
         let docRef = db.collection("owners").document(Auth.auth().currentUser?.uid ?? "")
         do {
             self.owner = try await docRef.getDocument(as: Owner.self)
             self.status = "Success!"
             self.success = true
+            return true
         }
         catch {
             self.status = "Error: \(error.localizedDescription)"
             self.success = false
+            return false
         }
     }
     

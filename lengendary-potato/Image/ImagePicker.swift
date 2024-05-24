@@ -59,23 +59,6 @@ struct ImagePickerView: View {
                             .scaledToFill()
                             .frame(width: 325, height: 325)
                             .clipShape(Circle())
-//                        HStack {
-//                            Button(action: {
-//                                selectToggle = true
-//                                saved = false
-//                            }, label: {
-//                                Image(systemName: "xmark").foregroundStyle(.red)
-//                            }).padding()
-//                            Button(action: {
-//                                imageStoreViewModel.uploadImage(uiImage: uiImage)
-//                            }, label: {
-//                                if(imageStoreViewModel.success){
-//                                    Text("Saved!")
-//                                } else {
-//                                    Image(systemName: "checkmark").foregroundStyle(.green)
-//                                }
-//                            }).padding()
-//                        }
                     }
                     }
                 }

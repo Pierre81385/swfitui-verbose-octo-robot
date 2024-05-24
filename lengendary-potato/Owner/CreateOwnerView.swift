@@ -12,37 +12,35 @@ struct CreateOwnerView: View {
     @ObservedObject var authViewModel: UserAuthViewModel
     @ObservedObject var imageViewModel: ImageStoreViewModel
     @ObservedObject var ownerViewModel: OwnerViewModel
-    @State private var confirmPhotoGalleryAccess: Bool = false
-    @State private var confirmLocationServices: Bool = false
     
     var body: some View {
         ZStack{
             VStack{
-                Spacer()
-                ImagePickerView(viewModel: ImageStoreViewModel()).shadow(color: .gray.opacity(0.6), radius: 15, x: 5, y: 5)
-                Spacer()
+                ImagePickerView(imageStoreViewModel: imageViewModel)
                 GroupBox(label:
-                            Text(ownerViewModel.owner.email).foregroundStyle(.black)
-                         
+                            Text("What should we call you?")
                          , content: {
                     VStack{
-                        TextField("Display name...", text: $ownerViewModel.owner.name).autocorrectionDisabled(true)
+                        TextField("My name is...", text: $ownerViewModel.owner.name).autocorrectionDisabled(true)
                             .autocapitalization(.none)
                             .tint(.black)
-                        Toggle("Allow Photo Access", isOn: $confirmPhotoGalleryAccess).tint(.black)
-                        Toggle("Allow Location Services?", isOn: $confirmLocationServices).tint(.black)
-                        
                         HStack{
                             Spacer()
-                            if(imageViewModel.uploaded && confirmPhotoGalleryAccess && confirmLocationServices) {
+                            
                                 Button(action: {
-                                    authViewModel.CreateUser()
-                                    authViewModel.ListenForUserState()
-                                    
+                                    imageViewModel.uploadImage(uiImage: UIImage(data: imageViewModel.imageStore.imgData)!)
                                 }, label: {
-                                    Text("SUBMIT").foregroundStyle(.white)
+                                    Text("Next").foregroundStyle(.white)
                                 })
-                                .navigationDestination(isPresented: $authViewModel.loggedIn, destination: {CreateOwnerView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), ownerViewModel: OwnerViewModel())}).foregroundStyle(.black)
+                                .onChange(of: imageViewModel.success){
+                                    ownerViewModel.owner.id = Auth.auth().currentUser!.uid
+                                    ownerViewModel.owner.email = Auth.auth().currentUser!.email!
+                                    ownerViewModel.owner.avatarUrl = imageViewModel.imageStore.url
+                                    ownerViewModel.createOwner()
+                                }
+                                .navigationDestination(isPresented: $ownerViewModel.success, destination: {
+                                    SuccessView()
+                                }).foregroundStyle(.black)
                                 .frame(width: 100, height: 30)
                                 .background(RoundedRectangle(cornerRadius: 8))
                                 .foregroundStyle(.black)
@@ -51,17 +49,15 @@ struct CreateOwnerView: View {
                             }
                             
 
-                        }
+                        
                     }
                 }).groupBoxStyle(AuthGroupBoxStyle())
                     .clipShape(RoundedRectangle(cornerSize: CGSize(width: 20, height: 10)))
                     .shadow(color: .gray.opacity(0.6), radius: 15, x: 5, y: 5)
-                    .padding(EdgeInsets(top: 0, leading:20, bottom: 20, trailing: 20))
+                    .padding(EdgeInsets(top: 60, leading:20, bottom: 20, trailing: 20))
                
                 
             }.ignoresSafeArea()
-        }.onAppear{
-            ownerViewModel.preFillFromAuth()
         }
     }
 }

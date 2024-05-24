@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct Owner: Codable, Identifiable {
-    var id: String 
+    @DocumentID var id: String?
     var name: String
     var email: String
     var long: Double

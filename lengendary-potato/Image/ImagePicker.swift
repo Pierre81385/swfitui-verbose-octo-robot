@@ -11,7 +11,7 @@ import PhotosUI
 
 
 struct ImagePickerView: View {
-    @ObservedObject var viewModel: ImageStoreViewModel
+    @ObservedObject var imageStoreViewModel: ImageStoreViewModel
     @State private var selectToggle: Bool = true
     @State private var selectedImage: PhotosPickerItem? = nil
     @State private var selectedImageData: Data? = nil
@@ -40,6 +40,7 @@ struct ImagePickerView: View {
                         Task {
                             // Retrieve selected asset in the form of Data
                             if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                imageStoreViewModel.imageStore.imgData = data
                                 selectedImageData = data
                                 selectToggle = false
                             }
@@ -58,26 +59,23 @@ struct ImagePickerView: View {
                             .scaledToFill()
                             .frame(width: 325, height: 325)
                             .clipShape(Circle())
-
-                        HStack {
-                            Button(action: {
-                                selectToggle = true
-                                saved = false
-                            }, label: {
-                                Image(systemName: "xmark").foregroundStyle(.red)
-                            }).padding()
-                            Button(action: {
-                                let uiImage = UIImage(data: selectedImageData)
-                                viewModel.uploadImage(uiImage: uiImage!)
-                                saved = true
-                            }, label: {
-                                if(viewModel.uploaded && saved){
-                                    Text("Saved!")
-                                } else {
-                                    Image(systemName: "checkmark").foregroundStyle(.green)
-                                }
-                            }).padding()
-                        }
+//                        HStack {
+//                            Button(action: {
+//                                selectToggle = true
+//                                saved = false
+//                            }, label: {
+//                                Image(systemName: "xmark").foregroundStyle(.red)
+//                            }).padding()
+//                            Button(action: {
+//                                imageStoreViewModel.uploadImage(uiImage: uiImage)
+//                            }, label: {
+//                                if(imageStoreViewModel.success){
+//                                    Text("Saved!")
+//                                } else {
+//                                    Image(systemName: "checkmark").foregroundStyle(.green)
+//                                }
+//                            }).padding()
+//                        }
                     }
                     }
                 }
@@ -88,6 +86,6 @@ struct ImagePickerView: View {
     }
 }
 
-#Preview {
-    ImagePickerView(viewModel: ImageStoreViewModel())
-}
+//#Preview {
+//    ImagePickerView(imageStoreViewModel: ImageStoreViewModel())
+//}

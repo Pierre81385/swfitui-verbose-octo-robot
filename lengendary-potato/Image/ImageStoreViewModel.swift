@@ -8,20 +8,19 @@
 import Foundation
 import SwiftUI
 import PhotosUI
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 
 class ImageStoreViewModel: ObservableObject {
-    @Published var imageStore: ImageStore = ImageStore(url: "")
-    @Published var isLoading: Bool = false
-    @Published var uploaded: Bool = false
+    @Published var imageStore: ImageStore = ImageStore(imgData: Data(), url: "")
     @Published var status: String = ""
+    @Published var success: Bool = false
     
     let storage = Storage.storage()
     private var db = Firestore.firestore()
     
     func uploadImage(uiImage: UIImage) {
-        isLoading = true
         let storageRef = storage.reference().child("images/\(uiImage.hash)")
         let data = uiImage.jpegData(compressionQuality: 0.3)
         let metadata = StorageMetadata()
@@ -31,20 +30,21 @@ class ImageStoreViewModel: ObservableObject {
                 (metadata, error) in
                     if let error = error {
                         self.status = String(describing: error.localizedDescription)
-                        self.uploaded = false
+                        self.success = false
                     }
                 
                 if let metadata = metadata {
                     self.status = String(describing: metadata)
                 }
                 
-                storageRef.downloadURL { (url, error) in
+                 storageRef.downloadURL { (url, error) in
                     guard let downloadURL = url else {
                       // Uh-oh, an error occurred!
                       return
                     }
                     self.imageStore.url = downloadURL.absoluteString
                     self.saveImageURL()
+                     self.success = true
                   }
             }
         }
@@ -56,13 +56,11 @@ class ImageStoreViewModel: ObservableObject {
            do {
                try docRef.setData(from: self.imageStore)
                self.status = "Success!"
-               self.isLoading = false
-               self.uploaded = true
+               self.success = true
            }
            catch {
                self.status = "Error: \(error.localizedDescription)"
-               self.isLoading = false
-               self.uploaded = false
+               self.success = false
            }
        }
 }

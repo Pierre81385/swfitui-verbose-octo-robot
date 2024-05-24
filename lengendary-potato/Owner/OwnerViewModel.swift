@@ -12,28 +12,23 @@ import FirebaseAuth
 import MapKit
 
 class OwnerViewModel: ObservableObject {
-    @Published var owner: Owner = Owner(id: "", name: "", email: "", long: 0.0, lat: 0.0, myDogs: [], avatarUrl: "")
+    @Published var owner: Owner = Owner(id: Auth.auth().currentUser?.uid ?? "", name: "", email: Auth.auth().currentUser?.email ?? "", long: 0.0, lat: 0.0, myDogs: [], avatarUrl: "")
     @Published var owners: [Owner] = []
     @Published var status: String = ""
-    @Published var isLoading: Bool = false
+    @Published var success: Bool = false
     
     private var db = Firestore.firestore()
     
-    func preFillFromAuth() {
-        owner.id = Auth.auth().currentUser?.uid ?? ""
-        owner.email = Auth.auth().currentUser?.email ?? ""
-    }
-    
     func getOwner() async {
-        let docRef = db.collection("owners").document(owner.id)
+        let docRef = db.collection("owners").document(Auth.auth().currentUser?.uid ?? "")
         do {
-            owner = try await docRef.getDocument(as: Owner.self)
+            self.owner = try await docRef.getDocument(as: Owner.self)
             self.status = "Success!"
-            self.isLoading = false
+            self.success = true
         }
         catch {
             self.status = "Error: \(error.localizedDescription)"
-            self.isLoading = false
+            self.success = false
         }
     }
     
@@ -46,15 +41,17 @@ class OwnerViewModel: ObservableObject {
     }
     
     func createOwner() {
-        let docRef = db.collection("owners").document(owner.id)
+        
+        let docRef = db.collection("owners").document(owner.id!)
+        
         do {
             try docRef.setData(from: self.owner)
             self.status = "Success!"
-            self.isLoading = false
+            self.success = true
         }
         catch {
             self.status = "Error: \(error.localizedDescription)"
-            self.isLoading = false
+            self.success = false
         }
     }
     

@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import PhotosUI
 
 struct ImageStore: Codable, Equatable, Identifiable {
     var id = UUID().uuidString
+    var imgData: Data
     var url: String
 }

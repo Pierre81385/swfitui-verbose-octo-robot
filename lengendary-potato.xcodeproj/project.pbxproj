@@ -40,6 +40,7 @@
 		B1CCC9862BE97EF2009565B4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CCC9852BE97EF2009565B4 /* ContentView.swift */; };
 		B1CCC9882BE97EF3009565B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1CCC9872BE97EF3009565B4 /* Assets.xcassets */; };
 		B1CCC98B2BE97EF3009565B4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1CCC98A2BE97EF3009565B4 /* Preview Assets.xcassets */; };
+		B1E17DCA2BFEFDA9001E4E58 /* TestSuccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E17DC92BFEFDA9001E4E58 /* TestSuccess.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +74,7 @@
 		B1CCC9852BE97EF2009565B4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B1CCC9872BE97EF3009565B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1CCC98A2BE97EF3009565B4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B1E17DC92BFEFDA9001E4E58 /* TestSuccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSuccess.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				B18163EF2BF3D8DB00290A1F /* OwnerModel.swift */,
 				B18164102BF598C800290A1F /* OwnerViewModel.swift */,
 				B181642C2BFC3C1700290A1F /* CreateOwnerView.swift */,
+				B1E17DC92BFEFDA9001E4E58 /* TestSuccess.swift */,
 			);
 			path = Owner;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				B18164232BF5B3C000290A1F /* UserAuthViewModel.swift in Sources */,
 				B18164112BF598C800290A1F /* OwnerViewModel.swift in Sources */,
 				B18163F82BF4320400290A1F /* PhotoGroupboxStyle.swift in Sources */,
+				B1E17DCA2BFEFDA9001E4E58 /* TestSuccess.swift in Sources */,
 				B181640F2BF590DF00290A1F /* CreatePetView.swift in Sources */,
 				B18164082BF586C400290A1F /* PetViewModel.swift in Sources */,
 				B18164062BF586AF00290A1F /* PetView.swift in Sources */,

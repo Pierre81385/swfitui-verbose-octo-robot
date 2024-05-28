@@ -30,7 +30,6 @@ struct AsyncAwaitImageView: View {
             if let image = imageLoader.image {
                 Image(uiImage: image)
                     .resizable()
-                    .aspectRatio(contentMode: .fit)
             } else {
                 ProgressView()
             }

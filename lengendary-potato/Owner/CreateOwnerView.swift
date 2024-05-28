@@ -18,7 +18,7 @@ struct CreateOwnerView: View {
     var body: some View {
         if(hasProfile){
             Text("Loading Profile").navigationDestination(isPresented: $hasProfile, destination: {
-                SuccessView(ownerViewModel: OwnerViewModel())
+                ProfileOwnerView(ownerViewModel: OwnerViewModel())
             })
         }
         else {
@@ -57,11 +57,10 @@ struct CreateOwnerView: View {
                                         ownerViewModel.createOwner()
                                     }
                                     .navigationDestination(isPresented: $ownerViewModel.success, destination: {
-                                        SuccessView(ownerViewModel: OwnerViewModel())
+                                        ProfileOwnerView(ownerViewModel: OwnerViewModel())
                                     }).foregroundStyle(.black)
                                         .frame(width: 100, height: 30)
                                         .background(RoundedRectangle(cornerRadius: 8))
-                                        .foregroundStyle(.black)
                                         .shadow(color: .gray.opacity(0.6), radius: 15, x: 5, y: 5)
                                         .padding(EdgeInsets(top: 8, leading:0, bottom: 0, trailing: 0))
                                 }

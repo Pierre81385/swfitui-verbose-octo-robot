@@ -31,18 +31,18 @@
 		B18164292BF793DC00290A1F /* ImageStoreViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B18164282BF793DC00290A1F /* ImageStoreViewModel.swift */; };
 		B181642B2BF798E000290A1F /* ImageStoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B181642A2BF798E000290A1F /* ImageStoreModel.swift */; };
 		B181642D2BFC3C1700290A1F /* CreateOwnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B181642C2BFC3C1700290A1F /* CreateOwnerView.swift */; };
-		B18164302BFD959400290A1F /* UserLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B181642F2BFD959400290A1F /* UserLocationView.swift */; };
 		B1CCC9842BE97EF2009565B4 /* lengendary_potatoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CCC9832BE97EF2009565B4 /* lengendary_potatoApp.swift */; };
 		B1CCC9862BE97EF2009565B4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CCC9852BE97EF2009565B4 /* ContentView.swift */; };
 		B1CCC9882BE97EF3009565B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1CCC9872BE97EF3009565B4 /* Assets.xcassets */; };
 		B1CCC98B2BE97EF3009565B4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1CCC98A2BE97EF3009565B4 /* Preview Assets.xcassets */; };
 		B1E17DCA2BFEFDA9001E4E58 /* ProfileOwnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E17DC92BFEFDA9001E4E58 /* ProfileOwnerView.swift */; };
-		B1E5CDA92C0661AF003EBFC5 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5CDA82C0661AF003EBFC5 /* LocationViewModel.swift */; };
-		B1E5CDAB2C06677E003EBFC5 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5CDAA2C06677E003EBFC5 /* MapView.swift */; };
 		B1E5CDAD2C0667A4003EBFC5 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5CDAC2C0667A4003EBFC5 /* LocationManager.swift */; };
+		B1E5CDAF2C06934D003EBFC5 /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5CDAE2C06934D003EBFC5 /* AnnotationView.swift */; };
+		B1E5CDB12C0693A1003EBFC5 /* AnnotationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5CDB02C0693A1003EBFC5 /* AnnotationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B14F53A52C06C3E000A39CCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		B18163E42BF3D73F00290A1F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B18163EF2BF3D8DB00290A1F /* OwnerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerModel.swift; sourceTree = "<group>"; };
 		B18163F72BF4320400290A1F /* PhotoGroupboxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGroupboxStyle.swift; sourceTree = "<group>"; };
@@ -63,16 +63,15 @@
 		B18164282BF793DC00290A1F /* ImageStoreViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStoreViewModel.swift; sourceTree = "<group>"; };
 		B181642A2BF798E000290A1F /* ImageStoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStoreModel.swift; sourceTree = "<group>"; };
 		B181642C2BFC3C1700290A1F /* CreateOwnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOwnerView.swift; sourceTree = "<group>"; };
-		B181642F2BFD959400290A1F /* UserLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocationView.swift; sourceTree = "<group>"; };
 		B1CCC9802BE97EF2009565B4 /* lengendary-potato.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lengendary-potato.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1CCC9832BE97EF2009565B4 /* lengendary_potatoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lengendary_potatoApp.swift; sourceTree = "<group>"; };
 		B1CCC9852BE97EF2009565B4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		B1CCC9872BE97EF3009565B4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B1CCC98A2BE97EF3009565B4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B1E17DC92BFEFDA9001E4E58 /* ProfileOwnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileOwnerView.swift; sourceTree = "<group>"; };
-		B1E5CDA82C0661AF003EBFC5 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
-		B1E5CDAA2C06677E003EBFC5 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		B1E5CDAC2C0667A4003EBFC5 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		B1E5CDAE2C06934D003EBFC5 /* AnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
+		B1E5CDB02C0693A1003EBFC5 /* AnnotationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,10 +148,9 @@
 		B181642E2BFD957100290A1F /* Map */ = {
 			isa = PBXGroup;
 			children = (
-				B181642F2BFD959400290A1F /* UserLocationView.swift */,
-				B1E5CDAA2C06677E003EBFC5 /* MapView.swift */,
-				B1E5CDA82C0661AF003EBFC5 /* LocationViewModel.swift */,
 				B1E5CDAC2C0667A4003EBFC5 /* LocationManager.swift */,
+				B1E5CDAE2C06934D003EBFC5 /* AnnotationView.swift */,
+				B1E5CDB02C0693A1003EBFC5 /* AnnotationViewModel.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -176,6 +174,7 @@
 		B1CCC9822BE97EF2009565B4 /* lengendary-potato */ = {
 			isa = PBXGroup;
 			children = (
+				B14F53A52C06C3E000A39CCA /* Info.plist */,
 				B1CCC9832BE97EF2009565B4 /* lengendary_potatoApp.swift */,
 				B18163E42BF3D73F00290A1F /* GoogleService-Info.plist */,
 				B1CCC9852BE97EF2009565B4 /* ContentView.swift */,
@@ -279,19 +278,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				B181640B2BF58B1600290A1F /* ListPetsView.swift in Sources */,
+				B1E5CDAF2C06934D003EBFC5 /* AnnotationView.swift in Sources */,
 				B181641F2BF5B1AC00290A1F /* RegisterView.swift in Sources */,
 				B18164292BF793DC00290A1F /* ImageStoreViewModel.swift in Sources */,
 				B18164172BF5AF9C00290A1F /* ImageUploader.swift in Sources */,
 				B181642B2BF798E000290A1F /* ImageStoreModel.swift in Sources */,
 				B18164192BF5AFB800290A1F /* ImagePicker.swift in Sources */,
+				B1E5CDB12C0693A1003EBFC5 /* AnnotationViewModel.swift in Sources */,
 				B18164152BF5AF8600290A1F /* AsyncImageHelper.swift in Sources */,
-				B1E5CDA92C0661AF003EBFC5 /* LocationViewModel.swift in Sources */,
 				B181640D2BF58B2F00290A1F /* ShowPetView.swift in Sources */,
 				B1CCC9862BE97EF2009565B4 /* ContentView.swift in Sources */,
 				B18164232BF5B3C000290A1F /* UserAuthViewModel.swift in Sources */,
 				B18164112BF598C800290A1F /* OwnerViewModel.swift in Sources */,
 				B1E5CDAD2C0667A4003EBFC5 /* LocationManager.swift in Sources */,
-				B1E5CDAB2C06677E003EBFC5 /* MapView.swift in Sources */,
 				B18163F82BF4320400290A1F /* PhotoGroupboxStyle.swift in Sources */,
 				B1E17DCA2BFEFDA9001E4E58 /* ProfileOwnerView.swift in Sources */,
 				B181640F2BF590DF00290A1F /* CreatePetView.swift in Sources */,
@@ -301,7 +300,6 @@
 				B18164042BF5868A00290A1F /* PetModel.swift in Sources */,
 				B1CCC9842BE97EF2009565B4 /* lengendary_potatoApp.swift in Sources */,
 				B181641D2BF5B19900290A1F /* LoginView.swift in Sources */,
-				B18164302BFD959400290A1F /* UserLocationView.swift in Sources */,
 				B18164252BF6DA1900290A1F /* UserAuthModel.swift in Sources */,
 				B181642D2BFC3C1700290A1F /* CreateOwnerView.swift in Sources */,
 			);
@@ -440,6 +438,8 @@
 				DEVELOPMENT_TEAM = 6W56PZLJZG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "lengendary-potato/Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location required to find dogs!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -469,6 +469,8 @@
 				DEVELOPMENT_TEAM = 6W56PZLJZG;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "lengendary-potato/Info.plist";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Location required to find dogs!";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

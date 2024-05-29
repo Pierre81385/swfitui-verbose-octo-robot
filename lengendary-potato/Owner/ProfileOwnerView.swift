@@ -26,25 +26,6 @@ struct ProfileOwnerView: View {
                             .clipShape(Circle())
                         Text(ownerViewModel.owner.name)
                         Text(ownerViewModel.owner.email)
-                        if(ownerViewModel.owner.lat == 0) {
-                            
-                                HStack{
-                                    Button(action: {
-                                        showMapWithAddress = true
-                                    }, label: {
-                                        HStack{
-                                            Text("Find My Location").foregroundStyle(.white)
-                                        }
-                                    }).sheet(isPresented: $showMapWithAddress, onDismiss: {}, content: {
-                                        UserLocationView()
-                                    })
-                                    .frame(width: 200, height: 30)
-                                        .background(RoundedRectangle(cornerRadius: 8))
-                                        .foregroundStyle(.black)
-                                        .shadow(color: .gray.opacity(0.6), radius: 15, x: 5, y: 5)
-                                }
-
-                        }
                         Spacer()
                     }
                 } else {

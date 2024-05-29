@@ -16,9 +16,10 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     let manager = CLLocationManager()
     
-    func requestLocation() {
-        manager.requestLocation()
+    func requestLocation() -> CLLocation {
         authStatus = manager.authorizationStatus
+        manager.requestLocation()
+        return manager.location!
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

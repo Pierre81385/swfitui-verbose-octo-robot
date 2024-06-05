@@ -7,13 +7,16 @@
 
 import SwiftUI
 import FirebaseAuth
+import MapKit
 
 struct CreateOwnerView: View {
     @ObservedObject var authViewModel: UserAuthViewModel
     @ObservedObject var imageViewModel: ImageStoreViewModel
     @ObservedObject var ownerViewModel: OwnerViewModel
+    @State var myLocation = LocationManager()
     @State private var imageSelected: Bool = false
     @State private var hasProfile: Bool = false
+    @State private var showMap: Bool = false
     
     var body: some View {
         if(hasProfile){
@@ -42,6 +45,23 @@ struct CreateOwnerView: View {
                                 TextField("My name is...", text: $ownerViewModel.owner.name).autocorrectionDisabled(true)
                                     .autocapitalization(.none)
                                     .tint(.black)
+                                TextField("Address", text: $ownerViewModel.owner.address).autocorrectionDisabled(true)
+                                    .autocapitalization(.none)
+                                    .tint(.black)
+                                HStack{
+                                    Spacer()
+                                    Button(action: {
+                                        ownerViewModel.getLocationByAddress()
+                                        showMap = true
+                                    }, label: {
+                                        Image(systemName: "magnifyingglass")
+                                    }).sheet(isPresented: $showMap, content: {
+                                            Map {
+                                                Marker(ownerViewModel.owner.address, coordinate: CLLocationCoordinate2D(latitude: ownerViewModel.owner.lat, longitude: ownerViewModel.owner.long))
+                                            }.ignoresSafeArea()
+                                        
+                                    })
+                                }
                                 HStack{
                                     Spacer()
                                     

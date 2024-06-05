@@ -13,6 +13,7 @@ struct ProfileOwnerView: View {
     @State private var ownerDocFound: Bool = false
     @State private var locationShared: Bool = false
     @State private var showMapWithAddress: Bool = false
+    @State private var addPet: Bool = false
     
     var body: some View {
         NavigationStack{
@@ -26,6 +27,13 @@ struct ProfileOwnerView: View {
                             .clipShape(Circle())
                         Text(ownerViewModel.owner.name)
                         Text(ownerViewModel.owner.email)
+                        Button(action: {
+                            addPet = true
+                        }, label: {
+                            Text("Add MapMarker!")
+                        }).navigationDestination(isPresented: $addPet, destination: {
+                            AnnotationView(imageViewModel: ImageStoreViewModel(), petAnnotationViewModel: PetAnnotationViewModel(), ownerViewModel: OwnerViewModel())
+                        })
                         Spacer()
                     }
                 } else {
@@ -37,6 +45,7 @@ struct ProfileOwnerView: View {
                     Task{
                         ownerDocFound = await ownerViewModel.getOwner()
                     }
+                    
                 }
             }
         }

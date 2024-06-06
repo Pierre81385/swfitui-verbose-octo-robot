@@ -46,7 +46,7 @@ struct RegisterView: View {
                                 }, label: {
                                     Text("SUBMIT").foregroundStyle(.white)
                                 })
-                                .navigationDestination(isPresented: $authViewModel.loggedIn, destination: {CreateOwnerView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), ownerViewModel: OwnerViewModel()).navigationBarBackButtonHidden(true).tint(.black) }).foregroundStyle(.black)
+                                .navigationDestination(isPresented: $authViewModel.loggedIn, destination: {CreateOwnerView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), contributorViewModel: ContributorViewModel()).navigationBarBackButtonHidden(true).tint(.black) }).foregroundStyle(.black)
                                 .frame(width: 100, height: 30)
                                 .background(RoundedRectangle(cornerRadius: 8))
                                 .foregroundStyle(.black)
@@ -67,21 +67,6 @@ struct RegisterView: View {
         }
     }
 }
-
-struct AuthGroupBoxStyle: GroupBoxStyle {
-    func makeBody(configuration: Configuration) -> some View {
-        VStack(alignment: .leading) {
-            configuration.label
-            configuration.content
-        }
-        .padding()
-        .background(Color(.white))
-        .foregroundColor(.black)
-        .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-    }
-}
-
-
 
 struct RegisterViewPreviews: PreviewProvider{
    static var previews: some View {

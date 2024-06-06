@@ -11,8 +11,6 @@ import FirebaseAuth
 struct LoginView: View {
     @ObservedObject var authViewModel: UserAuthViewModel
     @State private var newAccount: Bool = false
-    @State private var loginSucces: Bool = false
-
 
     var body: some View {
         NavigationStack{
@@ -21,8 +19,7 @@ struct LoginView: View {
                     Spacer()
                     Button("Create a new account", action: {
                         newAccount = true
-                        
-                    })
+                    }).tint(.black)
                     .navigationDestination(isPresented: $newAccount, destination: {RegisterView(authViewModel: UserAuthViewModel()).navigationBarBackButtonHidden(true)}).tint(.black)
                     
                     GroupBox(label:
@@ -39,7 +36,7 @@ struct LoginView: View {
                             HStack{
                                 Button("I forgot my password!", action: {
                                     authViewModel.SendPasswordReset()
-                                }).tint(.black)
+                                })
                                 Spacer()
                                 Button(action: {
                                     authViewModel.SignInWithEmailAndPassword()
@@ -47,7 +44,7 @@ struct LoginView: View {
                                 }, label: {
                                     Text("SUBMIT").foregroundStyle(.white)
                                 })
-                                .navigationDestination(isPresented: $authViewModel.loggedIn, destination: {CreateOwnerView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), ownerViewModel: OwnerViewModel()).navigationBarBackButtonHidden(true)}).foregroundStyle(.black)
+                                .navigationDestination(isPresented: $authViewModel.loggedIn, destination: {CreateOwnerView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), contributorViewModel: ContributorViewModel()).navigationBarBackButtonHidden(true)}).foregroundStyle(.black)
                                 .frame(width: 100, height: 30)
                                 .background(RoundedRectangle(cornerRadius: 8))
                                 .foregroundStyle(.black)

@@ -8,9 +8,9 @@
 import SwiftUI
 import FirebaseAuth
 
-struct ProfileOwnerView: View {
-    @ObservedObject var ownerViewModel: OwnerViewModel
-    @State private var ownerDocFound: Bool = false
+struct ProfileContributorView: View {
+    @ObservedObject var contributorViewModel: ContributorViewModel
+    @State private var contributorFound: Bool = false
     @State private var locationShared: Bool = false
     @State private var showMapWithAddress: Bool = false
     @State private var addPet: Bool = false
@@ -18,21 +18,24 @@ struct ProfileOwnerView: View {
     var body: some View {
         NavigationStack{
             ZStack{
-                if(ownerDocFound){
+                if(contributorFound){
                     VStack{
                         Spacer()
-                        AsyncAwaitImageView(imageUrl: URL(string: ownerViewModel.owner.avatarUrl)!)
+                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                            Text("View Map")
+                        })
+                        AsyncAwaitImageView(imageUrl: URL(string: contributorViewModel.contributor.avatarUrl)!)
                             .scaledToFill()
                             .frame(width: 325, height: 325)
                             .clipShape(Circle())
-                        Text(ownerViewModel.owner.name)
-                        Text(ownerViewModel.owner.email)
+                        Text(contributorViewModel.contributor.name)
+                        Text(contributorViewModel.contributor.email)
                         Button(action: {
                             addPet = true
                         }, label: {
                             Text("Add MapMarker!")
                         }).navigationDestination(isPresented: $addPet, destination: {
-                            AnnotationView(imageViewModel: ImageStoreViewModel(), petAnnotationViewModel: PetAnnotationViewModel(), ownerViewModel: OwnerViewModel())
+                            AnnotationView(imageViewModel: ImageStoreViewModel(), annotationViewModel: MyAnnotationViewModel(), contributorViewModel: ContributorViewModel())
                         })
                         Spacer()
                     }
@@ -41,9 +44,9 @@ struct ProfileOwnerView: View {
                 }
             }.onAppear{
                 if(Auth.auth().currentUser != nil){
-                    ownerViewModel.owner.id = Auth.auth().currentUser!.uid
+                    contributorViewModel.contributor.id = Auth.auth().currentUser!.uid
                     Task{
-                        ownerDocFound = await ownerViewModel.getOwner()
+                        contributorFound = await contributorViewModel.getContributor()
                     }
                     
                 }
@@ -53,7 +56,7 @@ struct ProfileOwnerView: View {
 }
 
 #Preview {
-    ProfileOwnerView(ownerViewModel: OwnerViewModel())
+    ProfileContributorView(contributorViewModel: ContributorViewModel())
 }
 
 

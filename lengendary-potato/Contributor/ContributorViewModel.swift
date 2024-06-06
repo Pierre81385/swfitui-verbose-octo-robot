@@ -11,9 +11,9 @@ import FirebaseFirestore
 import FirebaseAuth
 import MapKit
 
-@MainActor class OwnerViewModel: ObservableObject {
-    @Published var owner: Owner = Owner(id: Auth.auth().currentUser?.uid ?? "", name: "", email: Auth.auth().currentUser?.email ?? "", address: "", long: 0.0, lat: 0.0, markers: [], avatarUrl: "")
-    @Published var owners: [Owner] = []
+@MainActor class ContributorViewModel: ObservableObject {
+    @Published var contributor: Contributor = Contributor(id: Auth.auth().currentUser?.uid ?? "", name: "", email: Auth.auth().currentUser?.email ?? "", address: "", long: 0.0, lat: 0.0, markers: [], avatarUrl: "")
+    @Published var contributors: [Contributor] = []
     @Published var status: String = ""
     @Published var success: Bool = false
     
@@ -21,7 +21,7 @@ import MapKit
     
     func getLocationByAddress() {
         let geocoder = CLGeocoder()
-        geocoder.geocodeAddressString(self.owner.address, completionHandler: { (placemarks, error) in
+        geocoder.geocodeAddressString(self.contributor.address, completionHandler: { (placemarks, error) in
             if error != nil {
                 print("Failed to retrieve location")
                 return
@@ -36,8 +36,8 @@ import MapKit
             if let location = location {
                 let coordinate = location.coordinate
                 print("\nlat: \(coordinate.latitude), long: \(coordinate.longitude)")
-                self.owner.lat = coordinate.latitude
-                self.owner.long = coordinate.longitude
+                self.contributor.lat = coordinate.latitude
+                self.contributor.long = coordinate.longitude
             }
             else
             {
@@ -46,10 +46,10 @@ import MapKit
         })
     }
     
-    func getOwner() async -> Bool {
+    func getContributor() async -> Bool {
         let docRef = db.collection("owners").document(Auth.auth().currentUser?.uid ?? "")
         do {
-            self.owner = try await docRef.getDocument(as: Owner.self)
+            self.contributor = try await docRef.getDocument(as: Contributor.self)
             self.status = "Success!"
             self.success = true
             return true
@@ -61,16 +61,16 @@ import MapKit
         }
     }
     
-    func getOwners() async {
-        db.collection("owners")
+    func getContributor() async {
+        db.collection("contributors")
             .addSnapshotListener { querySnapshot, error in
                 guard let documents = querySnapshot?.documents else {
                     self.status = "Error: \(String(describing: error?.localizedDescription))"
                     self.success = false
                     return
                 }
-                self.owners = documents.compactMap { queryDocumentSnapshot -> Owner? in
-                    return try? queryDocumentSnapshot.data(as: Owner.self)
+                self.contributors = documents.compactMap { queryDocumentSnapshot -> Contributor? in
+                    return try? queryDocumentSnapshot.data(as: Contributor.self)
                 }
                 self.status = "Success! Found Owners"
                 self.success = true
@@ -78,12 +78,12 @@ import MapKit
 
     }
     
-    func createOwner() {
+    func createContributor() {
         
-        let docRef = db.collection("owners").document(owner.id!)
+        let docRef = db.collection("contributors").document(contributor.id!)
         
         do {
-            try docRef.setData(from: self.owner)
+            try docRef.setData(from: self.contributor)
             self.status = "Success!"
             self.success = true
         }
@@ -93,11 +93,11 @@ import MapKit
         }
     }
     
-    func updateOwner() {
-        if let id = owner.id {
-           let docRef = db.collection("owners").document(id)
+    func updateContributor() {
+        if let id = contributor.id {
+           let docRef = db.collection("contributor").document(id)
            do {
-             try docRef.setData(from: owner)
+             try docRef.setData(from: contributor)
                self.status = "Success!"
                self.success = true
            }
@@ -108,7 +108,7 @@ import MapKit
          }
     }
     
-    func deleteOwner() {
+    func deleteContributor() {
         
     }
 }

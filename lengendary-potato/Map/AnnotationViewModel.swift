@@ -10,14 +10,14 @@ import FirebaseFirestore
 import FirebaseAuth
 import CoreLocation
 
-struct PetAnnotation: Codable, Identifiable {
+struct MyAnnotation: Codable, Identifiable {
     @DocumentID var id: String?
     var lost: Bool
     var found: Bool
-    var petName: String
-    var petDescription: String
-    var petAddress: String
-    var phoneNumber: String
+    var name: String
+    var description: String
+    var address: String
+    var phone: String
     var email :String
     var long: Double
     var lat: Double
@@ -25,9 +25,9 @@ struct PetAnnotation: Codable, Identifiable {
     var myId: String
 }
 
-class PetAnnotationViewModel: ObservableObject {
-    @Published var petAnnotation: PetAnnotation = PetAnnotation(lost: true, found: false, petName: "", petDescription: "", petAddress: "", phoneNumber: "", email: "", long: 0.0, lat: 0.0, imageUrl: "", myId: Auth.auth().currentUser?.uid ?? "")
-    @Published var petAnnotations: [PetAnnotation] = []
+class MyAnnotationViewModel: ObservableObject {
+    @Published var myAnnotation: MyAnnotation = MyAnnotation(lost: true, found: false, name: "", description: "", address: "", phone: "", email: "", long: 0.0, lat: 0.0, imageUrl: "", myId: Auth.auth().currentUser?.uid ?? "")
+    @Published var myAnnotations: [MyAnnotation] = []
     @Published var status: String = ""
     @Published var success: Bool = false
     private var db = Firestore.firestore()
@@ -48,8 +48,8 @@ class PetAnnotationViewModel: ObservableObject {
                 
                 if let location = location {
                     let coordinate = location.coordinate
-                    self.petAnnotation.lat = coordinate.latitude
-                    self.petAnnotation.long = coordinate.longitude
+                    self.myAnnotation.lat = coordinate.latitude
+                    self.myAnnotation.long = coordinate.longitude
                     print("\nlat: \(coordinate.latitude), long: \(coordinate.longitude)")
                 }
                 else
@@ -78,21 +78,65 @@ class PetAnnotationViewModel: ObservableObject {
             })
         }
     
-    func createPetAnnotation() {
-        let docRef = db.collection("petAnnotations").document()
+    func createAnnotation() {
+        let docRef = db.collection("annotations").document()
         do {
-            try docRef.setData(from: self.petAnnotation)
+            try docRef.setData(from: self.myAnnotation)
             self.status = "Success!"
             self.success = true
         } catch {
             self.status = "Error: \(error.localizedDescription)"
             self.success = false
         }
-        self.petAnnotation.id = docRef.documentID
+        self.myAnnotation.id = docRef.documentID
     }
     
-    func getPetAnnotation(id: String) {
-        let docRef = db.collection("petAnnotations").document()
+    func getAnnotation(id: String) async {
+        let docRef = db.collection("annotations").document(id)
+        do {
+            self.myAnnotation = try await docRef.getDocument(as: MyAnnotation.self)
+            self.status = "Success!"
+            self.success = true
+        }
+        catch {
+            self.status = "Error: \(error.localizedDescription)"
+            self.success = false
+        }
+    }
+    
+    func getAnnotations() async {
+        db.collection("annotations")
+            .addSnapshotListener { querySnapshot, error in
+                guard let documents = querySnapshot?.documents else {
+                    self.status = "Error: \(String(describing: error?.localizedDescription))"
+                    self.success = false
+                    return
+                }
+                self.myAnnotations = documents.compactMap { queryDocumentSnapshot -> MyAnnotation? in
+                    return try? queryDocumentSnapshot.data(as: MyAnnotation.self)
+                }
+                self.status = "Success! Found Owners"
+                self.success = true
+            }
+    }
+    
+    func updateAnnotation() {
+        if let id = myAnnotation.id {
+           let docRef = db.collection("annotations").document(id)
+           do {
+             try docRef.setData(from: myAnnotation)
+               self.status = "Success!"
+               self.success = true
+           }
+           catch {
+               self.status = "Error: \(error.localizedDescription)"
+               self.success = false
+           }
+         }
+    }
+    
+    func deletePetAnnotation() {
+        
     }
     
 }

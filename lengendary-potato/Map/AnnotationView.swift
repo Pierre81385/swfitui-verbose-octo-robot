@@ -12,11 +12,11 @@ import MapKit
 struct AnnotationView: View {
     @State var myLocation = LocationManager()
     @State var showMap: Bool = false
-    @State private var ownerDocFound: Bool = false
+    @State private var contributorFound: Bool = false
     @State var includePhone: Bool = false
     @ObservedObject var imageViewModel: ImageStoreViewModel
-    @ObservedObject var petAnnotationViewModel: PetAnnotationViewModel
-    @ObservedObject var ownerViewModel: OwnerViewModel
+    @ObservedObject var annotationViewModel: MyAnnotationViewModel
+    @ObservedObject var contributorViewModel: ContributorViewModel
 
     var body: some View {
         ZStack{
@@ -30,22 +30,22 @@ struct AnnotationView: View {
                             Text("Found!")
                          , content: {
                     VStack{
-                        TextField("Name", text: $petAnnotationViewModel.petAnnotation.petName).tint(.black)
-                        TextField("Breed or Description", text: $petAnnotationViewModel.petAnnotation.petDescription).tint(.black)
+                        TextField("Name", text: $annotationViewModel.myAnnotation.name).tint(.black)
+                        TextField("Description", text: $annotationViewModel.myAnnotation.description).tint(.black)
                         Toggle(isOn: $includePhone, label: {
                             Text("Include a number to reach you?")
                         })
                         if(includePhone){
-                            TextField("Phone#", text: $petAnnotationViewModel.petAnnotation.phoneNumber)
+                            TextField("Phone#", text: $annotationViewModel.myAnnotation.phone)
                         }
-                        Button("FInd My Location", action: {
+                        Button("Pin to My Location", action: {
                             let location = myLocation.requestLocation()
-                            petAnnotationViewModel.petAnnotation.long = location.coordinate.longitude
-                            petAnnotationViewModel.petAnnotation.lat = location.coordinate.latitude
+                            annotationViewModel.myAnnotation.long = location.coordinate.longitude
+                            annotationViewModel.myAnnotation.lat = location.coordinate.latitude
                             showMap = true
                         }).sheet(isPresented: $showMap, content: {
                             Map {
-                                Marker("You are here.", coordinate: CLLocationCoordinate2D(latitude: petAnnotationViewModel.petAnnotation.lat, longitude: petAnnotationViewModel.petAnnotation.long))
+                                Marker("You are here.", coordinate: CLLocationCoordinate2D(latitude: annotationViewModel.myAnnotation.lat, longitude: annotationViewModel.myAnnotation.long))
                             }.ignoresSafeArea()
                         })
                         Button(action: {
@@ -55,14 +55,17 @@ struct AnnotationView: View {
                         })
                         .onChange(of: imageViewModel.success)
                         {
-                            petAnnotationViewModel.petAnnotation.email = Auth.auth().currentUser!.email!
-                            petAnnotationViewModel.petAnnotation.imageUrl = imageViewModel.imageStore.url
-                            petAnnotationViewModel.petAnnotation.found = true
-                            petAnnotationViewModel.petAnnotation.lost = false
-                            petAnnotationViewModel.createPetAnnotation()
-                            ownerViewModel.owner.markers.append(petAnnotationViewModel.petAnnotation.id ?? "")
-                            ownerViewModel.updateOwner()
+                            annotationViewModel.myAnnotation.email = Auth.auth().currentUser!.email!
+                            annotationViewModel.myAnnotation.imageUrl = imageViewModel.imageStore.url
+                            annotationViewModel.myAnnotation.found = true
+                            annotationViewModel.myAnnotation.lost = false
+                            annotationViewModel.createAnnotation()
+                            contributorViewModel.contributor.markers.append(annotationViewModel.myAnnotation.id ?? "")
+                            contributorViewModel.updateContributor()
                         }
+                        .navigationDestination(isPresented: $contributorViewModel.success, destination: {
+                            ProfileContributorView(contributorViewModel: ContributorViewModel())
+                        })
                         .foregroundStyle(.black)
                         .frame(width: 100, height: 30)
                         .background(RoundedRectangle(cornerRadius: 8))
@@ -76,9 +79,9 @@ struct AnnotationView: View {
             }
         }.onAppear{
             if(Auth.auth().currentUser != nil){
-                ownerViewModel.owner.id = Auth.auth().currentUser!.uid
+                contributorViewModel.contributor.id = Auth.auth().currentUser!.uid
                 Task{
-                    ownerDocFound = await ownerViewModel.getOwner()
+                    contributorFound = await contributorViewModel.getContributor()
                 }
                 
             }
@@ -88,5 +91,5 @@ struct AnnotationView: View {
 }
 
 #Preview {
-    AnnotationView(imageViewModel: ImageStoreViewModel(), petAnnotationViewModel: PetAnnotationViewModel(), ownerViewModel: OwnerViewModel())
+    AnnotationView(imageViewModel: ImageStoreViewModel(), annotationViewModel: MyAnnotationViewModel(), contributorViewModel: ContributorViewModel())
 }

@@ -12,7 +12,7 @@ import MapKit
 struct CreateOwnerView: View {
     @ObservedObject var authViewModel: UserAuthViewModel
     @ObservedObject var imageViewModel: ImageStoreViewModel
-    @ObservedObject var ownerViewModel: OwnerViewModel
+    @ObservedObject var contributorViewModel: ContributorViewModel
     @State var myLocation = LocationManager()
     @State private var imageSelected: Bool = false
     @State private var hasProfile: Bool = false
@@ -21,7 +21,7 @@ struct CreateOwnerView: View {
     var body: some View {
         if(hasProfile){
             Text("Loading Profile").navigationDestination(isPresented: $hasProfile, destination: {
-                ProfileOwnerView(ownerViewModel: OwnerViewModel())
+                ProfileContributorView(contributorViewModel: ContributorViewModel())
             })
         }
         else {
@@ -39,45 +39,44 @@ struct CreateOwnerView: View {
                         }
                         Spacer()
                         GroupBox(label:
-                                    Text("What should we call you?")
+                                    Text("Profile")
                                  , content: {
                             VStack{
-                                TextField("My name is...", text: $ownerViewModel.owner.name).autocorrectionDisabled(true)
+                                TextField("My name is...", text: $contributorViewModel.contributor.name).autocorrectionDisabled(true)
                                     .autocapitalization(.none)
                                     .tint(.black)
-                                TextField("Address", text: $ownerViewModel.owner.address).autocorrectionDisabled(true)
+                                TextField("Address", text: $contributorViewModel.contributor.address).autocorrectionDisabled(true)
                                     .autocapitalization(.none)
                                     .tint(.black)
                                 HStack{
                                     Spacer()
                                     Button(action: {
-                                        ownerViewModel.getLocationByAddress()
+                                        contributorViewModel.getLocationByAddress()
                                         showMap = true
                                     }, label: {
                                         Image(systemName: "magnifyingglass")
                                     }).sheet(isPresented: $showMap, content: {
                                             Map {
-                                                Marker(ownerViewModel.owner.address, coordinate: CLLocationCoordinate2D(latitude: ownerViewModel.owner.lat, longitude: ownerViewModel.owner.long))
+                                                Marker(contributorViewModel.contributor.address, coordinate: CLLocationCoordinate2D(latitude: contributorViewModel.contributor.lat, longitude: contributorViewModel.contributor.long))
                                             }.ignoresSafeArea()
                                         
                                     })
                                 }
                                 HStack{
                                     Spacer()
-                                    
                                     Button(action: {
                                         imageViewModel.uploadImage(uiImage: UIImage(data: imageViewModel.imageStore.imgData)!)
                                     }, label: {
                                         Text("Next").foregroundStyle(.white)
                                     })
                                     .onChange(of: imageViewModel.success){
-                                        ownerViewModel.owner.id = Auth.auth().currentUser!.uid
-                                        ownerViewModel.owner.email = Auth.auth().currentUser!.email!
-                                        ownerViewModel.owner.avatarUrl = imageViewModel.imageStore.url
-                                        ownerViewModel.createOwner()
+                                        contributorViewModel.contributor.id = Auth.auth().currentUser!.uid
+                                        contributorViewModel.contributor.email = Auth.auth().currentUser!.email!
+                                        contributorViewModel.contributor.avatarUrl = imageViewModel.imageStore.url
+                                        contributorViewModel.createContributor()
                                     }
-                                    .navigationDestination(isPresented: $ownerViewModel.success, destination: {
-                                        ProfileOwnerView(ownerViewModel: OwnerViewModel())
+                                    .navigationDestination(isPresented: $contributorViewModel.success, destination: {
+                                        ProfileContributorView(contributorViewModel: ContributorViewModel())
                                     }).foregroundStyle(.black)
                                         .frame(width: 100, height: 30)
                                         .background(RoundedRectangle(cornerRadius: 8))
@@ -97,9 +96,9 @@ struct CreateOwnerView: View {
                     }.ignoresSafeArea()
                 }.onAppear{
                     if(Auth.auth().currentUser != nil){
-                        ownerViewModel.owner.id = Auth.auth().currentUser!.uid
+                        contributorViewModel.contributor.id = Auth.auth().currentUser!.uid
                         Task{
-                            hasProfile = await ownerViewModel.getOwner()
+                            hasProfile = await contributorViewModel.getContributor()
                         }
                     }
                 }
@@ -109,5 +108,5 @@ struct CreateOwnerView: View {
 }
 
 #Preview {
-    CreateOwnerView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), ownerViewModel: OwnerViewModel())
+    CreateOwnerView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), contributorViewModel: ContributorViewModel())
 }

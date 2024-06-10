@@ -47,7 +47,7 @@ import MapKit
     }
     
     func getContributor() async -> Bool {
-        let docRef = db.collection("owners").document(Auth.auth().currentUser?.uid ?? "")
+        let docRef = db.collection("contributors").document(Auth.auth().currentUser?.uid ?? "")
         do {
             self.contributor = try await docRef.getDocument(as: Contributor.self)
             self.status = "Success!"
@@ -95,7 +95,7 @@ import MapKit
     
     func updateContributor() {
         if let id = contributor.id {
-           let docRef = db.collection("contributor").document(id)
+           let docRef = db.collection("contributors").document(id)
            do {
              try docRef.setData(from: contributor)
                self.status = "Success!"

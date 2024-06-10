@@ -14,6 +14,7 @@ class UserAuthViewModel: ObservableObject {
     @Published var success: Bool = false
     @Published var status: String = ""
     @Published var loggedIn: Bool = false
+    private var handle: AuthStateDidChangeListenerHandle?
     
     func CreateUser() {
          Auth.auth().createUser(withEmail: auth.email, password: password) { (result, error) in
@@ -28,17 +29,25 @@ class UserAuthViewModel: ObservableObject {
         }
     
     func ListenForUserState() {
-        Auth.auth().addStateDidChangeListener { (auth, user) in
+        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
             switch user {
             case .none:
                 print("USER NOT FOUND IN CHECK AUTH STATE")
                 self.loggedIn = false
             case .some(let user):
-                print("setting avatar for user: \(user.uid)")
+                print("FOUND: \(user.uid)!")
                 self.loggedIn = true
             }
         }
     }
+    
+    func StopListenerForUserState() {
+        if(handle != nil){
+            Auth.auth().removeStateDidChangeListener(handle!)
+        }
+    }
+    
+
     
     func GetCurrentUser() -> Bool {
         if Auth.auth().currentUser != nil {

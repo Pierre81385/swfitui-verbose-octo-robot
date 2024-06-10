@@ -44,7 +44,9 @@ struct LoginView: View {
                                 }, label: {
                                     Text("SUBMIT").foregroundStyle(.white)
                                 })
-                                .navigationDestination(isPresented: $authViewModel.loggedIn, destination: {CreateOwnerView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), contributorViewModel: ContributorViewModel()).navigationBarBackButtonHidden(true)}).foregroundStyle(.black)
+                                .navigationDestination(isPresented: $authViewModel.loggedIn, destination: {
+                                    CreateContributorView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), contributorViewModel: ContributorViewModel()).navigationBarBackButtonHidden(true)
+                                }).foregroundStyle(.black)
                                 .frame(width: 100, height: 30)
                                 .background(RoundedRectangle(cornerRadius: 8))
                                 .foregroundStyle(.black)
@@ -60,6 +62,7 @@ struct LoginView: View {
             }.ignoresSafeArea()
                 .onAppear{
                     authViewModel.SignOut()
+                    authViewModel.StopListenerForUserState()
                 }
         }.ignoresSafeArea()
     }

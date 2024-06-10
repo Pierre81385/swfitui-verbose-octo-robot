@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B16E1AC72C176D9000C3DD5F /* AnnotationListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1AC62C176D9000C3DD5F /* AnnotationListView.swift */; };
+		B16E1AC92C177EA200C3DD5F /* AnnotationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B16E1AC82C177EA200C3DD5F /* AnnotationMapView.swift */; };
 		B18163E52BF3D73F00290A1F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B18163E42BF3D73F00290A1F /* GoogleService-Info.plist */; };
 		B18163E82BF3D85200290A1F /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = B18163E72BF3D85200290A1F /* FirebaseAnalytics */; };
 		B18163EA2BF3D85200290A1F /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = B18163E92BF3D85200290A1F /* FirebaseAuth */; };
@@ -38,12 +40,14 @@
 		B1CCC98B2BE97EF3009565B4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1CCC98A2BE97EF3009565B4 /* Preview Assets.xcassets */; };
 		B1E17DCA2BFEFDA9001E4E58 /* ProfileContributorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E17DC92BFEFDA9001E4E58 /* ProfileContributorView.swift */; };
 		B1E5CDAD2C0667A4003EBFC5 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5CDAC2C0667A4003EBFC5 /* LocationManager.swift */; };
-		B1E5CDAF2C06934D003EBFC5 /* AnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5CDAE2C06934D003EBFC5 /* AnnotationView.swift */; };
+		B1E5CDAF2C06934D003EBFC5 /* AnnotationCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5CDAE2C06934D003EBFC5 /* AnnotationCreateView.swift */; };
 		B1E5CDB12C0693A1003EBFC5 /* AnnotationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E5CDB02C0693A1003EBFC5 /* AnnotationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B14F53A52C06C3E000A39CCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		B16E1AC62C176D9000C3DD5F /* AnnotationListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationListView.swift; sourceTree = "<group>"; };
+		B16E1AC82C177EA200C3DD5F /* AnnotationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationMapView.swift; sourceTree = "<group>"; };
 		B18163E42BF3D73F00290A1F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B18163EF2BF3D8DB00290A1F /* ContributorModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContributorModel.swift; sourceTree = "<group>"; };
 		B18163F72BF4320400290A1F /* PhotoGroupboxStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoGroupboxStyle.swift; sourceTree = "<group>"; };
@@ -72,7 +76,7 @@
 		B1CCC98A2BE97EF3009565B4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B1E17DC92BFEFDA9001E4E58 /* ProfileContributorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContributorView.swift; sourceTree = "<group>"; };
 		B1E5CDAC2C0667A4003EBFC5 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		B1E5CDAE2C06934D003EBFC5 /* AnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationView.swift; sourceTree = "<group>"; };
+		B1E5CDAE2C06934D003EBFC5 /* AnnotationCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationCreateView.swift; sourceTree = "<group>"; };
 		B1E5CDB02C0693A1003EBFC5 /* AnnotationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -152,7 +156,9 @@
 			isa = PBXGroup;
 			children = (
 				B1E5CDAC2C0667A4003EBFC5 /* LocationManager.swift */,
-				B1E5CDAE2C06934D003EBFC5 /* AnnotationView.swift */,
+				B1E5CDAE2C06934D003EBFC5 /* AnnotationCreateView.swift */,
+				B16E1AC82C177EA200C3DD5F /* AnnotationMapView.swift */,
+				B16E1AC62C176D9000C3DD5F /* AnnotationListView.swift */,
 				B1E5CDB02C0693A1003EBFC5 /* AnnotationViewModel.swift */,
 			);
 			path = Map;
@@ -281,12 +287,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				B181640B2BF58B1600290A1F /* ListPetsView.swift in Sources */,
-				B1E5CDAF2C06934D003EBFC5 /* AnnotationView.swift in Sources */,
+				B1E5CDAF2C06934D003EBFC5 /* AnnotationCreateView.swift in Sources */,
+				B16E1AC92C177EA200C3DD5F /* AnnotationMapView.swift in Sources */,
 				B181641F2BF5B1AC00290A1F /* RegisterView.swift in Sources */,
 				B18164292BF793DC00290A1F /* ImageStoreViewModel.swift in Sources */,
 				B18164172BF5AF9C00290A1F /* ImageUploader.swift in Sources */,
 				B181642B2BF798E000290A1F /* ImageStoreModel.swift in Sources */,
 				B18164192BF5AFB800290A1F /* ImagePicker.swift in Sources */,
+				B16E1AC72C176D9000C3DD5F /* AnnotationListView.swift in Sources */,
 				B195D7362C112E2F003D2D34 /* Style.swift in Sources */,
 				B1E5CDB12C0693A1003EBFC5 /* AnnotationViewModel.swift in Sources */,
 				B18164152BF5AF8600290A1F /* AsyncImageHelper.swift in Sources */,

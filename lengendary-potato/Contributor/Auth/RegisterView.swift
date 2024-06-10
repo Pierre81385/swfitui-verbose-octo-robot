@@ -42,11 +42,10 @@ struct RegisterView: View {
                                 Button(action: {
                                     authViewModel.CreateUser()
                                     authViewModel.ListenForUserState()
-                                    
                                 }, label: {
                                     Text("SUBMIT").foregroundStyle(.white)
                                 })
-                                .navigationDestination(isPresented: $authViewModel.loggedIn, destination: {CreateOwnerView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), contributorViewModel: ContributorViewModel()).navigationBarBackButtonHidden(true).tint(.black) }).foregroundStyle(.black)
+                                .navigationDestination(isPresented: $authViewModel.loggedIn, destination: {CreateContributorView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), contributorViewModel: ContributorViewModel()).navigationBarBackButtonHidden(true).tint(.black) }).foregroundStyle(.black)
                                 .frame(width: 100, height: 30)
                                 .background(RoundedRectangle(cornerRadius: 8))
                                 .foregroundStyle(.black)

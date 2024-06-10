@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseAuth
 import MapKit
 
-struct CreateOwnerView: View {
+struct CreateContributorView: View {
     @ObservedObject var authViewModel: UserAuthViewModel
     @ObservedObject var imageViewModel: ImageStoreViewModel
     @ObservedObject var contributorViewModel: ContributorViewModel
@@ -21,7 +21,7 @@ struct CreateOwnerView: View {
     var body: some View {
         if(hasProfile){
             Text("Loading Profile").navigationDestination(isPresented: $hasProfile, destination: {
-                ProfileContributorView(contributorViewModel: ContributorViewModel())
+                ProfileContributorView(contributorViewModel: ContributorViewModel()).navigationBarBackButtonHidden(true).foregroundStyle(.black)
             })
         }
         else {
@@ -108,5 +108,5 @@ struct CreateOwnerView: View {
 }
 
 #Preview {
-    CreateOwnerView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), contributorViewModel: ContributorViewModel())
+    CreateContributorView(authViewModel: UserAuthViewModel(), imageViewModel: ImageStoreViewModel(), contributorViewModel: ContributorViewModel())
 }

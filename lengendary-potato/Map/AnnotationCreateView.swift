@@ -10,6 +10,7 @@ import FirebaseAuth
 import MapKit
 
 struct AnnotationView: View {
+    @State private var back: Bool = false
     @State var myLocation = LocationManager()
     @State var showMap: Bool = false
     @State private var contributorFound: Bool = false
@@ -21,6 +22,15 @@ struct AnnotationView: View {
     var body: some View {
         ZStack{
             VStack{
+                HStack{
+                    Button(action: {
+                        back = true
+                    }, label: {
+                        Image(systemName: "chevron.backward").foregroundStyle(.black).padding()
+                    }).navigationDestination(isPresented: $back, destination: { ProfileContributorView(contributorViewModel: ContributorViewModel()).navigationBarBackButtonHidden(true).foregroundStyle(.black)})
+                        .padding()
+                    Spacer()
+                }
                 Spacer()
                 Text("Upload a photo.")
                 ImagePickerView(imageStoreViewModel: imageViewModel).onChange(of: imageViewModel.imageStore.imgData, {
@@ -45,8 +55,11 @@ struct AnnotationView: View {
                             showMap = true
                         }).sheet(isPresented: $showMap, content: {
                             Map {
-                                Marker("You are here.", coordinate: CLLocationCoordinate2D(latitude: annotationViewModel.myAnnotation.lat, longitude: annotationViewModel.myAnnotation.long))
-                            }.ignoresSafeArea()
+                                Marker(annotationViewModel.myAnnotation.address, coordinate: CLLocationCoordinate2D(latitude: annotationViewModel.myAnnotation.lat, longitude: annotationViewModel.myAnnotation.long))
+                            }.onAppear{
+                                annotationViewModel.reverseGeocoding(latitude: annotationViewModel.myAnnotation.lat, longitude: annotationViewModel.myAnnotation.long)
+                            }
+                            .ignoresSafeArea()
                         })
                         Button(action: {
                             imageViewModel.uploadImage(uiImage: UIImage(data: imageViewModel.imageStore.imgData)!)
@@ -77,7 +90,8 @@ struct AnnotationView: View {
                     .shadow(color: .gray.opacity(0.6), radius: 15, x: 5, y: 5)
                     .padding(EdgeInsets(top: 60, leading:20, bottom: 20, trailing: 20))
             }
-        }.onAppear{
+        }
+        .onAppear{
             if(Auth.auth().currentUser != nil){
                 contributorViewModel.contributor.id = Auth.auth().currentUser!.uid
                 Task{

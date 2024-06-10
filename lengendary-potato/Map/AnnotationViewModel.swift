@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 import CoreLocation
+import MapKit
 
 struct MyAnnotation: Codable, Identifiable {
     @DocumentID var id: String?
@@ -70,10 +71,12 @@ class MyAnnotationViewModel: ObservableObject {
                 
                 if let placemarks = placemarks, let placemark = placemarks.first {
                     print(placemarks)
+                    self.myAnnotation.address = String("\(placemark.thoroughfare ?? ""), \(placemark.subThoroughfare ?? ""), \(placemark.locality ?? ""), \(placemark.subLocality ?? ""), \(placemark.administrativeArea ?? ""), \(placemark.subAdministrativeArea ?? ""), \(placemark.postalCode ?? "")")
                 }
                 else
                 {
                     print("No Matching Address Found")
+                    self.myAnnotation.address = "No Address Found"
                 }
             })
         }

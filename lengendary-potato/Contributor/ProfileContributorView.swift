@@ -39,7 +39,8 @@ struct ProfileContributorView: View {
                             }, label: {
                                 Image(systemName: "map.fill").tint(.black).padding()
                             }).navigationDestination(isPresented: $showMainMap, destination: {
-                                AnnotationMapView(annotationViewModel: MyAnnotationViewModel()).navigationBarBackButtonHidden(true)
+                                AnnotationMapView(homeLat: $contributorViewModel.contributor.lat, homeLong: $contributorViewModel.contributor.long, annotationViewModel: MyAnnotationViewModel()
+                                ).navigationBarBackButtonHidden(true)
                             })
                             .padding()
                         }

@@ -15,6 +15,7 @@ struct MyAnnotation: Codable, Identifiable {
     @DocumentID var id: String?
     var lost: Bool
     var found: Bool
+    var spotted: Bool
     var name: String
     var description: String
     var address: String
@@ -27,7 +28,7 @@ struct MyAnnotation: Codable, Identifiable {
 }
 
 class MyAnnotationViewModel: ObservableObject {
-    @Published var myAnnotation: MyAnnotation = MyAnnotation(lost: true, found: false, name: "", description: "", address: "", phone: "", email: "", long: 0.0, lat: 0.0, imageUrl: "", myId: Auth.auth().currentUser?.uid ?? "")
+    @Published var myAnnotation: MyAnnotation = MyAnnotation(lost: true, found: false, spotted: false, name: "", description: "", address: "", phone: "", email: "", long: 0.0, lat: 0.0, imageUrl: "", myId: Auth.auth().currentUser?.uid ?? "")
     @Published var myAnnotations: [MyAnnotation] = []
     @Published var status: String = ""
     @Published var success: Bool = false

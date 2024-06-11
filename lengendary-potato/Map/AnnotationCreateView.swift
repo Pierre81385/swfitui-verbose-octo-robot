@@ -11,10 +11,12 @@ import MapKit
 
 struct AnnotationView: View {
     @State private var back: Bool = false
-    @State var myLocation = LocationManager()
-    @State var showMap: Bool = false
+    @State private var myLocation = LocationManager()
+    @State private var myLocationSelected: Bool = false
+    @State private var myHouseSelected: Bool = false
+    @State private var showMap: Bool = false
     @State private var contributorFound: Bool = false
-    @State var includePhone: Bool = false
+    @State private var includePhone: Bool = false
     @ObservedObject var imageViewModel: ImageStoreViewModel
     @ObservedObject var annotationViewModel: MyAnnotationViewModel
     @ObservedObject var contributorViewModel: ContributorViewModel
@@ -31,15 +33,53 @@ struct AnnotationView: View {
                         .padding()
                     Spacer()
                 }
-                Spacer()
-                Text("Upload a photo.")
                 ImagePickerView(imageStoreViewModel: imageViewModel).onChange(of: imageViewModel.imageStore.imgData, {
-                })
+                })                        .shadow(color: .gray.opacity(0.6), radius: 15, x: 5, y: 5)
+
+                Spacer()
+            }
+            VStack{
                 Spacer()
                 GroupBox(label:
-                            Text("Found!")
+                            Text("Map Marker Details")
                          , content: {
                     VStack{
+                        HStack{
+                            Spacer()
+                            Button(action: {
+                                annotationViewModel.myAnnotation.lost = true
+                                annotationViewModel.myAnnotation.found = false
+                                annotationViewModel.myAnnotation.spotted = false
+                            }, label: {
+                                VStack{
+                                    Image(systemName: "viewfinder.trianglebadge.exclamationmark").foregroundStyle(annotationViewModel.myAnnotation.lost ? .green : .black)
+                                    Text("Lost")
+                                }
+                            })
+                            Spacer()
+                            Button(action: {
+                                annotationViewModel.myAnnotation.lost = false
+                                annotationViewModel.myAnnotation.found = true
+                                annotationViewModel.myAnnotation.spotted = false
+                            }, label: {
+                                VStack{
+                                    Image(systemName: "scope").foregroundStyle(annotationViewModel.myAnnotation.found ? .green : .black)
+                                    Text("Found")
+                                }
+                            })
+                            Spacer()
+                            Button(action: {
+                                annotationViewModel.myAnnotation.lost = false
+                                annotationViewModel.myAnnotation.found = false
+                                annotationViewModel.myAnnotation.spotted = true
+                            }, label: {
+                                VStack{
+                                    Image(systemName: "photo").foregroundStyle(annotationViewModel.myAnnotation.spotted ? .green : .black)
+                                    Text("Spotted")
+                                }
+                            })
+                            Spacer()
+                        }.padding()
                         TextField("Name", text: $annotationViewModel.myAnnotation.name).tint(.black)
                         TextField("Description", text: $annotationViewModel.myAnnotation.description).tint(.black)
                         Toggle(isOn: $includePhone, label: {
@@ -48,19 +88,47 @@ struct AnnotationView: View {
                         if(includePhone){
                             TextField("Phone#", text: $annotationViewModel.myAnnotation.phone)
                         }
-                        Button("Pin to My Location", action: {
-                            let location = myLocation.requestLocation()
-                            annotationViewModel.myAnnotation.long = location.coordinate.longitude
-                            annotationViewModel.myAnnotation.lat = location.coordinate.latitude
-                            showMap = true
-                        }).sheet(isPresented: $showMap, content: {
-                            Map {
-                                Marker(annotationViewModel.myAnnotation.address, coordinate: CLLocationCoordinate2D(latitude: annotationViewModel.myAnnotation.lat, longitude: annotationViewModel.myAnnotation.long))
-                            }.onAppear{
-                                annotationViewModel.reverseGeocoding(latitude: annotationViewModel.myAnnotation.lat, longitude: annotationViewModel.myAnnotation.long)
-                            }
-                            .ignoresSafeArea()
-                        })
+                        HStack{
+                            Spacer()
+                            Button(action: {
+                                myHouseSelected.toggle()
+                                annotationViewModel.myAnnotation.long = contributorViewModel.contributor.long
+                                annotationViewModel.myAnnotation.lat = contributorViewModel.contributor.lat
+                                annotationViewModel.reverseGeocoding(latitude: contributorViewModel.contributor.lat, longitude: contributorViewModel.contributor.long)
+                                if(myHouseSelected){
+                                    myLocationSelected = false
+                                }
+                            }, label: {
+                                VStack{
+                                    Image(systemName: "house.fill").foregroundStyle(myHouseSelected ? .green : .black)
+                                    Text("My Address")
+                                }
+                            })
+                            Spacer()
+                            Button(action: {
+                                myLocationSelected.toggle()
+                                let location = myLocation.requestLocation()
+                                annotationViewModel.myAnnotation.long = location.coordinate.longitude
+                                annotationViewModel.myAnnotation.lat = location.coordinate.latitude
+                                if(myLocationSelected){
+                                    myHouseSelected = false
+                                }
+                                showMap = true
+                            }, label: {
+                                VStack{
+                                    Image(systemName: "location.circle.fill").foregroundStyle(myLocationSelected ? .green : .black)
+                                    Text("My Location")
+                                }
+                            }).sheet(isPresented: $showMap, content: {
+                                Map {
+                                    Marker(annotationViewModel.myAnnotation.address, coordinate: CLLocationCoordinate2D(latitude: annotationViewModel.myAnnotation.lat, longitude: annotationViewModel.myAnnotation.long))
+                                }.onAppear{
+                                    annotationViewModel.reverseGeocoding(latitude: annotationViewModel.myAnnotation.lat, longitude: annotationViewModel.myAnnotation.long)
+                                }
+                                .ignoresSafeArea()
+                            })
+                            Spacer()
+                        }.padding()
                         Button(action: {
                             imageViewModel.uploadImage(uiImage: UIImage(data: imageViewModel.imageStore.imgData)!)
                         }, label: {
@@ -70,8 +138,6 @@ struct AnnotationView: View {
                         {
                             annotationViewModel.myAnnotation.email = Auth.auth().currentUser!.email!
                             annotationViewModel.myAnnotation.imageUrl = imageViewModel.imageStore.url
-                            annotationViewModel.myAnnotation.found = true
-                            annotationViewModel.myAnnotation.lost = false
                             annotationViewModel.createAnnotation()
                             contributorViewModel.contributor.markers.append(annotationViewModel.myAnnotation.id ?? "")
                             contributorViewModel.updateContributor()

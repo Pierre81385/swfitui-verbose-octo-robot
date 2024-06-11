@@ -11,6 +11,8 @@ import MapKit
 struct AnnotationMapView: View {
     @Binding var homeLat: Double
     @Binding var homeLong: Double
+    @State private var useLocation: Bool = false
+    @State private var locationType: String = "location.fill"
     @State private var back: Bool = false
     @State private var showSettings: Bool = false
     @State private var position: MapCameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 39.742043, longitude: -104.991531), span: (MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))))
@@ -22,17 +24,25 @@ struct AnnotationMapView: View {
         
             ZStack{
                 Map(position: $position) {
-                    Annotation("Home", coordinate: CLLocationCoordinate2D(latitude: homeLat, longitude: homeLong), content: {
-                        Text("🏠")
-                    })
-                    Annotation("You Are Here", coordinate: currentLocation, content: {
-                            Text("📍")
-                        })
+//                    Annotation("Home", coordinate: CLLocationCoordinate2D(latitude: homeLat, longitude: homeLong), content: {
+//                        Text("🏠")
+//                    })
+//                    Annotation("You Are Here", coordinate: currentLocation, content: {
+//                            Text("📍")
+//                        })
                     
                     ForEach(annotationViewModel.myAnnotations, id: \.id){
                         annotation in
                         Annotation(annotation.name, coordinate: CLLocationCoordinate2D(latitude: annotation.lat, longitude: annotation.long), content: {
-                            Text("🐾")
+                            if(annotation.lost) {
+                                Image(systemName: "viewfinder.trianglebadge.exclamationmark").foregroundStyle(.red)
+                            }
+                            if(annotation.found) {
+                                Image(systemName: "scope").foregroundStyle(.green)
+                            }
+                            if(annotation.spotted) {
+                                Image(systemName: "photo").foregroundStyle(.yellow)
+                            }
                         })
                     }
                 }.mapStyle(.hybrid(elevation: .realistic))
@@ -48,11 +58,19 @@ struct AnnotationMapView: View {
                                 })
                                 Spacer()
                             Button(action: {
-                                let location = locationManager.requestLocation()
-                                position = MapCameraPosition.region(MKCoordinateRegion(center: location.coordinate, span:MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)))
-                                currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                                useLocation = !useLocation
+                                if(useLocation){
+                                    locationType = "house.fill"
+                                    let location = locationManager.requestLocation()
+                                    position = MapCameraPosition.region(MKCoordinateRegion(center: location.coordinate, span:MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)))
+                                    currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                                } else {
+                                    locationType = "location.fill"
+                                    position = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: homeLat, longitude: homeLong), span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)))
+                                    currentLocation = CLLocationCoordinate2D(latitude: homeLat, longitude: homeLong)
+                                }
                             }, label: {
-                                Text("Update Position")
+                                  Image(systemName: locationType)
                             })
                                 Button(action: {
                                     showSettings.toggle()
@@ -71,7 +89,7 @@ struct AnnotationMapView: View {
                                 })
                                }
                     }).shadow(color: .gray.opacity(0.6), radius: 15, x: 5, y: 5)
-                        .padding(EdgeInsets(top: 54, leading: 11, bottom: 11, trailing: 11))
+                        .padding(EdgeInsets(top: 72, leading: 12, bottom: 12, trailing: 12))
                     Spacer()
                 }
                 
@@ -79,6 +97,7 @@ struct AnnotationMapView: View {
             }.ignoresSafeArea()
                 .onAppear{
                     let location = locationManager.requestLocation()
+                    locationType = "house.fill"
                     position = MapCameraPosition.region(MKCoordinateRegion(center: location.coordinate, span:MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)))
                     currentLocation = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
                     Task{

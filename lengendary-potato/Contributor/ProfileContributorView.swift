@@ -27,32 +27,38 @@ struct ProfileContributorView: View {
                             Button(action: {
                                 logout = true
                             }, label: {
-                                Image(systemName: "chevron.backward")
-                                .tint(.black).padding()
-                            }).navigationDestination(isPresented: $logout, destination: {
+                                HStack{
+                                    Image(systemName: "chevron.backward")
+                                        .frame(width: 100, height: 25)
+                                        .tint(.black)
+                                }
+                                
+                            })
+                            .navigationDestination(isPresented: $logout, destination: {
                                 LoginView(authViewModel: UserAuthViewModel()).navigationBarBackButtonHidden(true).foregroundStyle(.black)
                             })
                             .padding()
                             Spacer()
-                            Button(action: {
-                                showMainMap = true
-                            }, label: {
-                                Image(systemName: "map.fill").tint(.black).padding()
-                            }).navigationDestination(isPresented: $showMainMap, destination: {
-                                AnnotationMapView(homeLat: $contributorViewModel.contributor.lat, homeLong: $contributorViewModel.contributor.long, annotationViewModel: MyAnnotationViewModel()
-                                ).navigationBarBackButtonHidden(true)
-                            })
-                            .padding()
                         }
                         Spacer()
-                        AsyncAwaitImageView(imageUrl: URL(string: contributorViewModel.contributor.avatarUrl)!)
-                            .scaledToFill()
-                            .frame(width: 325, height: 325)
-                            .clipShape(Circle())
-                            .shadow(color: .gray.opacity(0.6), radius: 15, x: 5, y: 5)
-                        Text(contributorViewModel.contributor.name)
-                        Text(contributorViewModel.contributor.email)
-                        Text(contributorViewModel.contributor.address)
+                        
+                            VStack{
+                                Spacer()
+                                Text(contributorViewModel.contributor.name).fontWeight(.bold)
+                                Text(contributorViewModel.contributor.email).fontWeight(.ultraLight)
+                                AsyncAwaitImageView(imageUrl: URL(string: contributorViewModel.contributor.avatarUrl)!)
+                                    .scaledToFill()
+                                    .frame(width: 350, height: 475)
+                                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
+                                    .shadow(color: .gray.opacity(0.6), radius: 15, x: 5, y: 5)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 30)
+                                    .transition(.opacity)
+                                Spacer()
+                            }
+                       
+                            
+                            
                         Spacer()
                         HStack{
                             Button(action: {
@@ -61,9 +67,21 @@ struct ProfileContributorView: View {
                                 Image(systemName: "photo.on.rectangle.angled")
                                     .tint(.black)
                                     .padding()
-                            }).navigationDestination(isPresented: $showGallery, destination: {
-                                AnnotationListView(myAnnotationViewModel: MyAnnotationViewModel()).navigationBarBackButtonHidden(true)
+                            }).buttonStyle(NeumorphicButton(shape: Circle()))
+                            .navigationDestination(isPresented: $showGallery, destination: {
+                                AnnotationScrollView(myAnnotationViewModel: MyAnnotationViewModel()).navigationBarBackButtonHidden(true)
                             }).tint(.black).padding()
+                            Spacer()
+                            Button(action: {
+                                showMainMap = true
+                            }, label: {
+                                Image(systemName: "map.fill").tint(.black).padding()
+                            }).buttonStyle(NeumorphicButton(shape: Circle()))
+                            .navigationDestination(isPresented: $showMainMap, destination: {
+                                AnnotationMapView(homeLat: $contributorViewModel.contributor.lat, homeLong: $contributorViewModel.contributor.long, annotationViewModel: MyAnnotationViewModel()
+                                ).navigationBarBackButtonHidden(true)
+                            })
+                            .padding()
                             Spacer()
                             Button(action: {
                                 addMarker = true
@@ -71,7 +89,8 @@ struct ProfileContributorView: View {
                                 Image(systemName: "photo.badge.plus.fill")
                                     .tint(.black)
                                     .padding()
-                            }).navigationDestination(isPresented: $addMarker, destination: {
+                            }).buttonStyle(NeumorphicButton(shape: Circle()))
+                            .navigationDestination(isPresented: $addMarker, destination: {
                                 AnnotationView(imageViewModel: ImageStoreViewModel(), annotationViewModel: MyAnnotationViewModel(), contributorViewModel: ContributorViewModel()).navigationBarBackButtonHidden(true)
                             }).padding()
                         }
@@ -86,6 +105,7 @@ struct ProfileContributorView: View {
                     Task{
                         contributorFound = await contributorViewModel.getContributor()
                     }
+                   
                 }
             }
         }

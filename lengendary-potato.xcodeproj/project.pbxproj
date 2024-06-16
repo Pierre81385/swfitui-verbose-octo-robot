@@ -34,6 +34,9 @@
 		B181642B2BF798E000290A1F /* ImageStoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B181642A2BF798E000290A1F /* ImageStoreModel.swift */; };
 		B181642D2BFC3C1700290A1F /* CreateContributorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B181642C2BFC3C1700290A1F /* CreateContributorView.swift */; };
 		B195D7362C112E2F003D2D34 /* Style.swift in Sources */ = {isa = PBXBuildFile; fileRef = B195D7352C112E2F003D2D34 /* Style.swift */; };
+		B1ADCDB22C1D02C600226149 /* AnnotationScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ADCDB12C1D02C600226149 /* AnnotationScrollView.swift */; };
+		B1ADCDB42C1D53EF00226149 /* NeumorphicStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ADCDB32C1D53EF00226149 /* NeumorphicStyle.swift */; };
+		B1ADCDB62C1E957B00226149 /* ProfileCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1ADCDB52C1E957B00226149 /* ProfileCard.swift */; };
 		B1CCC9842BE97EF2009565B4 /* lengendary_potatoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CCC9832BE97EF2009565B4 /* lengendary_potatoApp.swift */; };
 		B1CCC9862BE97EF2009565B4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1CCC9852BE97EF2009565B4 /* ContentView.swift */; };
 		B1CCC9882BE97EF3009565B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B1CCC9872BE97EF3009565B4 /* Assets.xcassets */; };
@@ -69,6 +72,9 @@
 		B181642A2BF798E000290A1F /* ImageStoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStoreModel.swift; sourceTree = "<group>"; };
 		B181642C2BFC3C1700290A1F /* CreateContributorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateContributorView.swift; sourceTree = "<group>"; };
 		B195D7352C112E2F003D2D34 /* Style.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Style.swift; sourceTree = "<group>"; };
+		B1ADCDB12C1D02C600226149 /* AnnotationScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnotationScrollView.swift; sourceTree = "<group>"; };
+		B1ADCDB32C1D53EF00226149 /* NeumorphicStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicStyle.swift; sourceTree = "<group>"; };
+		B1ADCDB52C1E957B00226149 /* ProfileCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCard.swift; sourceTree = "<group>"; };
 		B1CCC9802BE97EF2009565B4 /* lengendary-potato.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lengendary-potato.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1CCC9832BE97EF2009565B4 /* lengendary_potatoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lengendary_potatoApp.swift; sourceTree = "<group>"; };
 		B1CCC9852BE97EF2009565B4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -103,6 +109,7 @@
 				B18164102BF598C800290A1F /* ContributorViewModel.swift */,
 				B181642C2BFC3C1700290A1F /* CreateContributorView.swift */,
 				B1E17DC92BFEFDA9001E4E58 /* ProfileContributorView.swift */,
+				B1ADCDB52C1E957B00226149 /* ProfileCard.swift */,
 			);
 			path = Contributor;
 			sourceTree = "<group>";
@@ -159,6 +166,7 @@
 				B1E5CDAE2C06934D003EBFC5 /* AnnotationCreateView.swift */,
 				B16E1AC82C177EA200C3DD5F /* AnnotationMapView.swift */,
 				B16E1AC62C176D9000C3DD5F /* AnnotationListView.swift */,
+				B1ADCDB12C1D02C600226149 /* AnnotationScrollView.swift */,
 				B1E5CDB02C0693A1003EBFC5 /* AnnotationViewModel.swift */,
 			);
 			path = Map;
@@ -192,6 +200,7 @@
 				B18164022BF584A400290A1F /* Pet */,
 				B18163FB2BF45C8800290A1F /* Contributor */,
 				B18163F72BF4320400290A1F /* PhotoGroupboxStyle.swift */,
+				B1ADCDB32C1D53EF00226149 /* NeumorphicStyle.swift */,
 				B1CCC9872BE97EF3009565B4 /* Assets.xcassets */,
 				B1CCC9892BE97EF3009565B4 /* Preview Content */,
 			);
@@ -298,6 +307,7 @@
 				B195D7362C112E2F003D2D34 /* Style.swift in Sources */,
 				B1E5CDB12C0693A1003EBFC5 /* AnnotationViewModel.swift in Sources */,
 				B18164152BF5AF8600290A1F /* AsyncImageHelper.swift in Sources */,
+				B1ADCDB22C1D02C600226149 /* AnnotationScrollView.swift in Sources */,
 				B181640D2BF58B2F00290A1F /* ShowPetView.swift in Sources */,
 				B1CCC9862BE97EF2009565B4 /* ContentView.swift in Sources */,
 				B18164232BF5B3C000290A1F /* UserAuthViewModel.swift in Sources */,
@@ -314,6 +324,8 @@
 				B181641D2BF5B19900290A1F /* LoginView.swift in Sources */,
 				B18164252BF6DA1900290A1F /* UserAuthModel.swift in Sources */,
 				B181642D2BFC3C1700290A1F /* CreateContributorView.swift in Sources */,
+				B1ADCDB42C1D53EF00226149 /* NeumorphicStyle.swift in Sources */,
+				B1ADCDB62C1E957B00226149 /* ProfileCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
